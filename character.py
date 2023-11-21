@@ -2,27 +2,27 @@ from __future__ import annotations
 print("\n")
 
 from dice import Dice
-
-from rich import print
-
-class MessageManager():
-    pass
+from items import Items
 
 class Character:
     
-    def __init__(self, name: str, max_hp: int, attack: int, defense: int, dice: Dice):
+    def __init__(self, name: str, max_hp: int, attack: int, defense: int, dice: Dice, initiative: int):
         self._name = name
         self._max_hp = max_hp
         self._current_hp = max_hp
         self._attack_value = attack
         self._defense_value = defense
         self._dice = dice
+        self._initiative = initiative
 
     def __str__(self):
         return f"""{self._name} the Character enter the arena with :
     ■ attack: {self._attack_value} 
     ■ defense: {self._defense_value}"""
         
+    def get_initiative(self):
+        return self._initiative
+
     def get_defense_value(self):
         return self._defense_value
         
@@ -39,6 +39,12 @@ class Character:
 
     def regenerate(self):
         self._current_hp = self._max_hp
+
+    # def increase_health(self):
+    #     self._current_hp += Items.more_health()
+    #     if self._current_hp > self._max_hp:
+    #         self._current_hp = self._max_hp
+    #     self.show_healthbar()
 
     def decrease_health(self, amount):
         self._current_hp -= amount
