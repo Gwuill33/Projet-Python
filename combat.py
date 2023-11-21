@@ -2,6 +2,7 @@ import random
 
 from dice import Dice
 from character import Warrior, Mage, Thief, Character
+from items import Items
 
 print("\n")
 
@@ -42,6 +43,7 @@ class Combat:
     def start_combat(self):
         char1 = self.random_enemy()
         char2 = self.choose_character()
+        item = self.choose_items()
         for _ in range(100):
             char1.regenerate()
             char2.regenerate()

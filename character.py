@@ -40,11 +40,11 @@ class Character:
     def regenerate(self):
         self._current_hp = self._max_hp
 
-    # def increase_health(self):
-    #     self._current_hp += Items.more_health()
-    #     if self._current_hp > self._max_hp:
-    #         self._current_hp = self._max_hp
-    #     self.show_healthbar()
+    def increase_health(self):
+        self._current_hp += Items.more_health()
+        if self._current_hp > self._max_hp:
+            self._current_hp = self._max_hp
+        self.show_healthbar()
 
     def decrease_health(self, amount):
         self._current_hp -= amount
