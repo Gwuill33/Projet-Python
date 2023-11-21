@@ -3,29 +3,23 @@ print("\n")
 
 from dice import Dice
 
-from rich import print
-
 class MessageManager():
     pass
 
 class Character:
     
-    def __init__(self, name: str, max_hp: int, attack: int, defense: int, dice: Dice, initiative: int):
+    def __init__(self, name: str, max_hp: int, attack: int, defense: int, dice: Dice):
         self._name = name
         self._max_hp = max_hp
         self._current_hp = max_hp
         self._attack_value = attack
         self._defense_value = defense
         self._dice = dice
-        self._initiative = initiative
 
     def __str__(self):
         return f"""{self._name} the Character enter the arena with :
     ■ attack: {self._attack_value} 
     ■ defense: {self._defense_value}"""
-
-    def get_initiative(self):
-        return self._initiative
         
     def get_defense_value(self):
         return self._defense_value
