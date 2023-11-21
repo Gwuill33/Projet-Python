@@ -2,6 +2,7 @@ import random
 
 from dice import Dice
 from character import Warrior, Mage, Thief, Character
+from items import Items
 
 print("\n")
 
@@ -47,7 +48,6 @@ class Combat:
         if (self._char_list[1].get_initiative() == self._char_list[0].get_initiative()):
             dice = random.choice([1, 2])
             if dice == 1 : self._char_list[0], self._char_list[1] = self._char_list[1], self._char_list[0]
-
 
     def start_combat(self):
         self.create_combat()
