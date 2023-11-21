@@ -8,10 +8,13 @@ print("\n")
 class Combat:
 
     def __init__(self) -> None:
-        pass
+        self._char_list: list[Character] = []
 
     def __str__(self) -> str:
         pass
+
+    def create_combat(self):
+        self._char_list = [self.choose_character(), self.random_enemy()]
 
     def random_enemy(self):
         warrior = Warrior("James", 20, 8, 3, Dice(6), 1)
@@ -38,27 +41,21 @@ class Combat:
             char = Thief(name, 20, 8, 3, Dice(6), 2)
             return char
         
+    def combat_order(self):
+        if (self._char_list[1].get_initiative() > self._char_list[0].get_initiative()):
+            self._char_list[0], self._char_list[1] = self._char_list[1], self._char_list[0]
+        if (self._char_list[1].get_initiative() == self._char_list[0].get_initiative()):
+            dice = random.choice([1, 2])
+            if dice == 1 : self._char_list[0], self._char_list[1] = self._char_list[1], self._char_list[0]
+
 
     def start_combat(self):
-        char1 = self.random_enemy()
-        char2 = self.choose_character()
-        for _ in range(100):
-            char1.regenerate()
-            char2.regenerate()
-        
-        if char1.get_initiative() > char2.get_initiative() :
-            while char1.is_alive() and char2.is_alive():
-                char1.attack(char2)
-                char2.attack(char1)
-        elif char1._initiative < char2._initiative :
-            while char1.is_alive() and char2.is_alive():
-                char2.attack(char1)
-                char1.attack(char2)
-        else:
-            while char1.is_alive() and char2.is_alive():
-                char1.attack(char2)
-                char2.attack(char1)
-
+        self.create_combat()
+        self.combat_order()
+        while self._char_list[0].is_alive() and self._char_list[1].is_alive():
+                self._char_list[0].attack(self._char_list[1])
+                self._char_list[1].attack(self._char_list[0])
+      
 if __name__ == "__main__":
     combat = Combat()
     combat.start_combat()
