@@ -14,9 +14,9 @@ class Combat:
         pass
 
     def random_enemy(self):
-        warrior = Warrior("James", 20, 8, 3, Dice(6))
-        mage = Mage("Elisa", 20, 8, 3, Dice(6))
-        thief = Thief("Michel", 20, 8, 3, Dice(6))
+        warrior = Warrior("James", 20, 8, 3, Dice(6), 1)
+        mage = Mage("Elisa", 20, 8, 3, Dice(6), 0)
+        thief = Thief("Michel", 20, 8, 3, Dice(6), 2)
 
         cars: list[Character] = [warrior, mage, thief]
         char1 = random.choice(cars)
@@ -46,9 +46,18 @@ class Combat:
             char1.regenerate()
             char2.regenerate()
         
-        while char1.is_alive() and char2.is_alive():
-            char1.attack(char2)
-            char2.attack(char1)
+        if char1.get_initiative() > char2.get_initiative() :
+            while char1.is_alive() and char2.is_alive():
+                char1.attack(char2)
+                char2.attack(char1)
+        elif char1._initiative < char2._initiative :
+            while char1.is_alive() and char2.is_alive():
+                char2.attack(char1)
+                char1.attack(char2)
+        else:
+            while char1.is_alive() and char2.is_alive():
+                char1.attack(char2)
+                char2.attack(char1)
 
 if __name__ == "__main__":
     combat = Combat()

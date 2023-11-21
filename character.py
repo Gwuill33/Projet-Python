@@ -20,6 +20,9 @@ class Character:
     ■ attack: {self._attack_value} 
     ■ defense: {self._defense_value}"""
         
+    def get_initiative(self):
+        return self._initiative
+
     def get_defense_value(self):
         return self._defense_value
         
