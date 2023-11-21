@@ -40,11 +40,11 @@ class Character:
     def regenerate(self):
         self._current_hp = self._max_hp
 
-    def increase_health(self):
-        self._current_hp += Items.more_health()
-        if self._current_hp > self._max_hp:
-            self._current_hp = self._max_hp
-        self.show_healthbar()
+    # def increase_health(self):
+    #     self._current_hp += Items.more_health()
+    #     if self._current_hp > self._max_hp:
+    #         self._current_hp = self._max_hp
+    #     self.show_healthbar()
 
     def decrease_health(self, amount):
         self._current_hp -= amount
@@ -53,7 +53,7 @@ class Character:
         self.show_healthbar()
         
     def compute_damages(self, roll, target):
-        return self._attack_value + roll + Items.more_damage()
+        return self._attack_value + roll
         
     def attack(self, target: Character):
         if not self.is_alive():
@@ -64,7 +64,7 @@ class Character:
         target.defense(damages, self)
     
     def compute_defense(self, damages, roll, attacker):
-        return damages - self._defense_value - roll - Items.minus_damage()
+        return damages - self._defense_value - roll
     
     def defense(self, damages, attacker: Character):
         roll = self._dice.roll()
