@@ -28,17 +28,20 @@ class Combat:
         if char == 'Warrior' :
             name = input ("quel est ton nom :")
             char = Warrior(name, 20, 8, 3, Dice(6))
+            return char
         elif char == 'Mage':
             name = input ("quel est ton nom :")
             char = Mage(name, 20, 8, 3, Dice(6))
+            return char
         elif char == 'Thief':
             name = input ("quel est ton nom :")
             char = Thief(name, 20, 8, 3, Dice(6))
+            return char
         
 
-    def start_combat(self, char1, char2: Character):
-        char1 = Combat.choice_chars()
-
+    def start_combat(self):
+        char1 = self.random_enemy()
+        char2 = self.choose_character()
         for _ in range(100):
             char1.regenerate()
             char2.regenerate()
@@ -46,3 +49,7 @@ class Combat:
         while char1.is_alive() and char2.is_alive():
             char1.attack(char2)
             char2.attack(char1)
+
+if __name__ == "__main__":
+    combat = Combat()
+    combat.start_combat()
