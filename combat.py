@@ -1,5 +1,5 @@
+from __future__ import annotations
 import random
-
 from dice import Dice
 from character import Warrior, Mage, Thief, Character
 from items import Items
@@ -18,9 +18,9 @@ class Combat:
         self._char_list = [self.choose_character(), self.random_enemy()]
 
     def random_enemy(self):
-        warrior = Warrior("James", 20, 8, 3, Dice(6), 1)
-        mage = Mage("Elisa", 20, 8, 3, Dice(6), 0)
-        thief = Thief("Michel", 20, 8, 3, Dice(6), 2)
+        warrior = Warrior("James", 20, 8, 3, Dice(6), 1, Items.random_items())
+        mage = Mage("Elisa", 20, 8, 3, Dice(6), 0, Items.random_items())
+        thief = Thief("Michel", 20, 8, 3, Dice(6), 2, Items.random_items())
 
         cars: list[Character] = [warrior, mage, thief]
         char1 = random.choice(cars)
@@ -28,18 +28,37 @@ class Combat:
         return char1
     
     def choose_character(self):
-        char = input("Choisi ton charactère entre Warrior, Mage ou Thief : ",)
-        if char == 'Warrior' :
+        char = input("""Choisi ton type de personnage entre :
+1 - Warrior
+2 - Mage 
+3 - Thief 
+""",)
+        if char == '1' :
             name = input ("Quel est ton nom : ")
-            char = Warrior(name, 20, 8, 3, Dice(6), 1)
+            item = input("""Choisi ton item entre :
+1 - Epée
+2 - Bouclier
+3 - Potion(x2) 
+""")
+            char = Warrior(name, 20, 8, 3, Dice(6), 1, Items.choose_items(item))
             return char
-        elif char == 'Mage':
+        elif char == '2':
             name = input ("Quel est ton nom : ")
-            char = Mage(name, 20, 8, 3, Dice(6), 0)
+            item = input("""Choisi ton item entre :
+1 - Epée
+2 - Bouclier
+3 - Potion(x2) 
+"""),
+            char = Mage(name, 20, 8, 3, Dice(6), 0, Items.choose_items(item))
             return char
-        elif char == 'Thief':
+        elif char == '3':
             name = input ("Quel est ton nom : ")
-            char = Thief(name, 20, 8, 3, Dice(6), 2)
+            item = input("""Choisi ton item entre :
+1 - Epée
+2 - Bouclier
+3 - Potion(x2)
+""",)
+            char = Thief(name, 20, 8, 3, Dice(6), 2, Items.choose_items(item))
             return char
         
     def combat_order(self):
