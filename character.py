@@ -2,11 +2,7 @@ from __future__ import annotations
 print("\n")
 
 from dice import Dice
-
-from rich import print
-
-class MessageManager():
-    pass
+from items import Items
 
 class Character:
     
@@ -40,6 +36,12 @@ class Character:
     def regenerate(self):
         self._current_hp = self._max_hp
 
+    def increase_health(self):
+        self._current_hp += Items.more_health()
+        if self._current_hp > self._max_hp:
+            self._current_hp = self._max_hp
+        self.show_healthbar()
+
     def decrease_health(self, amount):
         self._current_hp -= amount
         if self._current_hp < 0:
@@ -47,7 +49,7 @@ class Character:
         self.show_healthbar()
         
     def compute_damages(self, roll, target):
-        return self._attack_value + roll
+        return self._attack_value + roll + Items.more_damage()
         
     def attack(self, target: Character):
         if not self.is_alive():
@@ -58,7 +60,7 @@ class Character:
         target.defense(damages, self)
     
     def compute_defense(self, damages, roll, attacker):
-        return damages - self._defense_value - roll
+        return damages - self._defense_value - roll - Items.minus_damage()
     
     def defense(self, damages, attacker: Character):
         roll = self._dice.roll()
