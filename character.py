@@ -6,13 +6,14 @@ from items import Items
 
 class Character:
     
-    def __init__(self, name: str, max_hp: int, attack: int, defense: int, dice: Dice):
+    def __init__(self, name: str, max_hp: int, attack: int, defense: int, dice: Dice, initiative: int):
         self._name = name
         self._max_hp = max_hp
         self._current_hp = max_hp
         self._attack_value = attack
         self._defense_value = defense
         self._dice = dice
+        self._initiative = initiative
 
     def __str__(self):
         return f"""{self._name} the Character enter the arena with :

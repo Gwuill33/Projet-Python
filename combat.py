@@ -27,15 +27,15 @@ class Combat:
         char = input("choisi ton charactère entre Warrior, Mage ou Thief",)
         if char == 'Warrior' :
             name = input ("quel est ton nom :")
-            char = Warrior(name, 20, 8, 3, Dice(6))
+            char = Warrior(name, 20, 8, 3, Dice(6), 1)
             return char
         elif char == 'Mage':
             name = input ("quel est ton nom :")
-            char = Mage(name, 20, 8, 3, Dice(6))
+            char = Mage(name, 20, 8, 3, Dice(6), 0)
             return char
         elif char == 'Thief':
             name = input ("quel est ton nom :")
-            char = Thief(name, 20, 8, 3, Dice(6))
+            char = Thief(name, 20, 8, 3, Dice(6), 2)
             return char
         
 
