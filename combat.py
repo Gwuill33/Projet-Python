@@ -24,17 +24,17 @@ class Combat:
         return char1
     
     def choose_character(self):
-        char = input("choisi ton charactère entre Warrior, Mage ou Thief",)
+        char = input("Choisi ton charactère entre Warrior, Mage ou Thief : ",)
         if char == 'Warrior' :
-            name = input ("quel est ton nom :")
+            name = input ("Quel est ton nom : ")
             char = Warrior(name, 20, 8, 3, Dice(6), 1)
             return char
         elif char == 'Mage':
-            name = input ("quel est ton nom :")
+            name = input ("Quel est ton nom : ")
             char = Mage(name, 20, 8, 3, Dice(6), 0)
             return char
         elif char == 'Thief':
-            name = input ("quel est ton nom :")
+            name = input ("Quel est ton nom : ")
             char = Thief(name, 20, 8, 3, Dice(6), 2)
             return char
         
