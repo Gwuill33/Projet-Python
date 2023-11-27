@@ -59,7 +59,7 @@ class Combat:
 
         actions = input(f"""Choisi ton action entre :
 1 - Attack
-2 - Potion ({'Nombre de potions : ' + str(self._char_list[0]._items.get_number_potion()) if self._char_list[0]._items.get_number_potion() > 0 else 'Pas de potion'})
+2 - Potion ({'Nombre de potions : ' + str(self._char_list[0]._items.get_number_potion()) if self._char_list[0]._items.get_number_potion() > 0 and self._char_list[0]._items.get_name_items == 'Potion' else 'Pas de potion'})
 3 - Afficher la barre de vie
 """,)
         if actions == '1' :
