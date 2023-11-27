@@ -52,7 +52,6 @@ class Combat:
         else:
             print("Choisissez un personnage valide")
             return self.choose_character()
-        
 
 
     def choose_actions(self):
@@ -72,7 +71,6 @@ class Combat:
         else:
             print("Choisi une action valide")
             return self.choose_actions()
-
 
     def combat_order(self):
         if (self._char_list[1].get_initiative() > self._char_list[0].get_initiative()):

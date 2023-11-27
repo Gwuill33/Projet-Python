@@ -6,7 +6,7 @@ import random
 
 class Character:
     
-    def __init__(self, name: str, max_hp: int, attack: int, defense: int, dice: Dice, initiative: int, items : Items):
+    def __init__(self, name: str, max_hp: int, attack: int, defense: int, dice: Dice, initiative: int, items : Items, bot=False):
         self._name = name
         self._max_hp = max_hp
         self._current_hp = max_hp
@@ -15,6 +15,7 @@ class Character:
         self._dice = dice
         self._initiative = initiative
         self._items = items
+        self._bot = bot
 
     def __str__(self):
         return f"""{self._name} the Character enter the arena with :
@@ -83,8 +84,6 @@ class Character:
         self.decrease_health(wounds)
 
 class Warrior(Character):
-    def __init__(self):
-        self.skills = {"critical attack": "critical attack"}
 
     def compute_damages(self, roll, target: Character):
         print("🪓 Bonus: Axe in your face (+3 attack)")
@@ -97,17 +96,16 @@ class Warrior(Character):
         if not self.is_alive():
             return
         roll = self._dice.roll()
-        for i, (skill_name, skill_description) in enumerate(self.skills.items(), start=1):
-            print(f"{i} - {skill_name}: {skill_description}")
-        char = input
-        if char > 1:
+        print(""""choisi ta competence :
+              1-
+              """)
+        char = input()
+        if char == 1:
             damages = self.critical_attack(roll, target)
-        print(f"⚔️ {self._name} attack {target.get_name()} with {damages} damages (attack: {self._attack_value} + roll: {roll})")
-        target.defense(damages, self)
-
+            print(f"⚔️ {self._name} attack {target.get_name()} with {damages} damages (attack: {self._attack_value} + roll: {roll})")
+            target.defense(damages, self)
+            
 class Mage(Character):
-    def __init__(self):
-        self.skills = {"heal": "heal", "fireball": "fireball"}
 
     def compute_defense(self, damages, roll, attacker: Character):
         print("🧙 Bonus: Magic armor (-3 damages)")
@@ -126,20 +124,20 @@ class Mage(Character):
         if not self.is_alive():
             return
         roll = self._dice.roll()
-        for i, (skill_name, skill_description) in enumerate(self.skills.items(), start=1):
-            print(f"{i} - {skill_name}: {skill_description}")
-        char = input
+        print(""""choisi ta competence :
+              1-
+              2-
+              3-""")
+        char = input()
         if char == 1:
             damages = self.fireball(target)
+            target.defense(damages, self)
         elif char == 2:
             damages = self.soins()
-        print(f"⚔️ {self._name} attack {target.get_name()} with {damages} damages (attack: {self._attack_value} + roll: {roll})")
-        target.defense(damages, self)
+            print(f"⚔️ {self._name} attack {target.get_name()} with {damages} damages (attack: {self._attack_value} + roll: {roll})")
+            target.defense(damages, self)
 
 class Thief(Character):
-    def __init__(self):
-        self.skills = {"Sneacky attack": "Sneacky attack", "critical attack": "critica attack"}
-
     def Sneacky_attack(self, roll, target: Character):
         return self.compute_damages(roll, target) + target.get_defense_value()
     
@@ -153,15 +151,19 @@ class Thief(Character):
         if not self.is_alive():
             return
         roll = self._dice.roll()
-        for i, (skill_name, skill_description) in enumerate(self.skills.items(), start=1):
-            print(f"{i} - {skill_name}: {skill_description}")
-        char = input
+        print(""""choisi ta competence :
+              1-
+              2-
+              3-""")
+        char = input()
         if char == 1:
             damages = self.Sneacky_attack(roll, target)
+            print(f"⚔️ {self._name} attack {target.get_name()} with {damages} damages (attack: {self._attack_value} + roll: {roll})")
             target.defense(damages, self)
             
         elif char == 2:
             damages = self.critical_attack(roll, target)
+            print(f"⚔️ {self._name} attack {target.get_name()} with {damages} damages (attack: {self._attack_value} + roll: {roll})")
             target.defense(damages, self)
 
     def defense(self, damages, attacker: Character):
