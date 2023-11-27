@@ -33,34 +33,47 @@ class Combat:
 2 - Mage 
 3 - Thief 
 """,)
+        # Le choix du personnage est le Warrior
         if char == '1' :
             name = input ("Quel est ton nom : ")
-            item = input("""Choisi ton item entre :
-1 - Epée
-2 - Bouclier
-3 - Potion(x2) 
-""")
-            char = Warrior(name, 20, 8, 3, Dice(6), 1, Items.choose_items(item))
+            char = Warrior(name, 20, 8, 3, Dice(6), 1, Items.choose_items())
             return char
+        # Le choix du personnage est le Mage
         elif char == '2':
             name = input ("Quel est ton nom : ")
-            item = input("""Choisi ton item entre :
-1 - Epée
-2 - Bouclier
-3 - Potion(x2)
-"""),
-            char = Mage(name, 20, 8, 3, Dice(6), 0, Items.choose_items(item))
+            char = Mage(name, 20, 8, 3, Dice(6), 0, Items.choose_items())
             return char
+        # Le choix du personnage est le Thief
         elif char == '3':
             name = input ("Quel est ton nom : ")
-            item = input("""Choisi ton item entre :
-1 - Epée
-2 - Bouclier
-3 - Potion(x2)
-""",)
-            char = Thief(name, 20, 8, 3, Dice(6), 2, Items.choose_items(item))
+            char = Thief(name, 20, 8, 3, Dice(6), 2, Items.choose_items())
             return char
+        # Si le choix n'est pas valide
+        else:
+            print("Choisissez un personnage valide")
+            return self.choose_character()
         
+
+
+    def choose_actions(self):
+
+        actions = input(f"""Choisi ton action entre :
+1 - Attack
+2 - Defense
+3 - Potion (Nombre de potions : {self._char_list[0]._items.get_number_potion()})
+""",)
+        if actions == '1' :
+            return self._char_list[0].attack(self._char_list[1])
+        elif actions == '2':
+            return self._char_list[0].defense(self._char_list[1])
+        elif actions == '3' and self._char_list[0]._items.get_number_potion() > 0:
+            self._char_list[0]._items.set_number_potion(self._char_list[0]._items.get_number_potion() - 1)
+            return self._char_list[0].increase_health()
+        else:
+            print("Choisi une action valide")
+            return self.choose_actions()
+
+
     def combat_order(self):
         if (self._char_list[1].get_initiative() > self._char_list[0].get_initiative()):
             self._char_list[0], self._char_list[1] = self._char_list[1], self._char_list[0]
@@ -72,7 +85,7 @@ class Combat:
         self.create_combat()
         self.combat_order()
         while self._char_list[0].is_alive() and self._char_list[1].is_alive():
-                self._char_list[0].attack(self._char_list[1])
+                self.choose_actions()
                 self._char_list[1].attack(self._char_list[0])
       
 if __name__ == "__main__":
