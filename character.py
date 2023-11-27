@@ -1,8 +1,6 @@
 from __future__ import annotations
 print("\n")
-
 from dice import Dice
-from items import Items
 
 class Character:
     
@@ -42,7 +40,6 @@ class Character:
         self._current_hp = self._max_hp
 
     def increase_health(self):
-        self._current_hp += Items.more_health()
         if self._current_hp > self._max_hp:
             self._current_hp = self._max_hp
         self.show_healthbar()

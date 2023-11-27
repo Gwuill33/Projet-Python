@@ -1,8 +1,6 @@
 from __future__ import annotations
-from dice import Dice
 import random
 from character import Character
-# from character import Character
 
 class Items(Character):
     
