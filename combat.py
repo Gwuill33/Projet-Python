@@ -47,7 +47,7 @@ class Combat:
             item = input("""Choisi ton item entre :
 1 - Epée
 2 - Bouclier
-3 - Potion(x2) 
+3 - Potion(x2)
 """),
             char = Mage(name, 20, 8, 3, Dice(6), 0, Items.choose_items(item))
             return char
