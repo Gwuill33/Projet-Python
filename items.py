@@ -1,4 +1,6 @@
 from __future__ import annotations
+from dice import Dice
+import random
 # from character import Character
 
 class Items():
@@ -23,13 +25,37 @@ class Items():
     
     def more_health(self):
         return self._health_items
+    
 
-    def choose_items(self):
-        item = input("Choisi ton item entre Epée, Bouclier ou Potion(x2) : ",)
-        if item == 'Epée' :
-            return Items("Epée", 3, 0, 0)
-        elif item == 'Bouclier':
-            return Items("Bouclier", 0, 3, 0)
-        elif item == 'Potion':
-            return Items("Potion", 0, 0, 5)
+    def choose_items(item: str) -> Items:
+        if item == '1' :
+            return Epée()
+        elif item == '2':
+            return Bouclier()
+        elif item == '3':
+            return Potion()
+        
+    def random_items() -> Items:
+
+        épée = Epée()
+        bouclier = Bouclier()
+        potion = Potion()
+        items: list[Items] = [épée, bouclier, potion]
+        item = random.choice(items)
+
+        return item
+
+class Epée(Items):
+    def __init__(self):
+        super().__init__("Epée", 3, 0, 0)
+
+class Bouclier(Items):
+    def __init__(self):
+        super().__init__("Bouclier", 0, 3, 0)
+
+class Potion(Items):
+    def __init__(self):
+        super().__init__("Potion", 0, 0, 5)
+
+
         

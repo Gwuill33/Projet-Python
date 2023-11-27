@@ -61,11 +61,19 @@ class Combat:
         ]
 
         console.print(Align.center(Panel("\n".join(class_options), title="Character Classes", border_style="cyan", width=60)))
+        
 
         class_choice = console.input(Align.center("Entrez la classe de votre choix (1, 2, ou 3): "))
 
         name = console.input(Align.center("Quel est ton nom : "))
-        item_choice = console.input(Align.center("Choisi ton item entre :\n1 - Epée\n2 - Bouclier\n3 - Potion(x2)\n"))
+
+        items_options = [
+            "1. Epée",
+            "2. Bouclier",
+            "3. Potion(x2)"
+        ]
+
+        item_choice = console.input(Align.center(Panel("\n".join(items_options), title="choose your item", border_style="green", width=40)))
 
         char = None
         if class_choice == '1':
