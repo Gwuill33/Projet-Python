@@ -1,9 +1,10 @@
 from __future__ import annotations
 from dice import Dice
 import random
+from character import Character
 # from character import Character
 
-class Items():
+class Items(Character):
     
     def __init__(self, name_items, attack_items, defense_items, health_items):
         self._name_items = name_items
@@ -17,14 +18,14 @@ class Items():
     def get_name_items(self):
         return self._name_items
     
-    def more_damage(self):
-        return self._attack_items
+    def attack(self, target: Character):
+        return super().attack(target) + self._attack_items
     
-    def minus_damage(self):
-        return self._defense_items
+    def defense(self, target: Character):
+        return super().defense(target) + self._defense_items
     
     def more_health(self):
-        return self._health_items
+        return super().increase_health(self) + self._health_items
     
     @staticmethod
     def choose_items(item: str) -> Items:
