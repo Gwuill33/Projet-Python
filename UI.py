@@ -7,8 +7,15 @@ from items import Items
 from rich import print
 from rich.console import Console
 from rich.panel import Panel
+from rich.align import Align
+from rich.progress import track
+import time
+
 
 console = Console()
+
+for i in track(range(8), description="Loading ..."):
+    time.sleep(0.3)
 
 class Combat:
     def __init__(self) -> None:
@@ -29,7 +36,7 @@ class Combat:
 
     def choose_character(self):
 
-        console.print("\n[bold]Bienvenue au combat des héros ![/bold]\n", justify="center" )
+        console.print("\n[bold]Bienvenue dans le combat des héros ![/bold]\n", justify="center" )
 
         class_options = [
             "1. Warrior: Big guy with big weapon.",
@@ -37,11 +44,11 @@ class Combat:
             "3. Thief: Sneaky bastard."
         ]
 
-        console.print(Panel("\n".join(class_options), title="Character Classes", border_style="cyan", width=60))
+        console.print(Align.center(Panel("\n".join(class_options), title="Character Classes", border_style="cyan", width=60 )))
 
-        class_choice = input("Entrez la classe de votre choix (1, 2, ou 3): ")
+        class_choice = console.input (Align.center("Entrez la classe de votre choix (1, 2, ou 3): "))
 
-        name = input("Quel est ton nom : ")
+        name = console.input(Align.center("Quel est ton nom : "))
         if class_choice == '1':
             return Warrior(name, 20, 8, 3, Dice(6), 1)
         elif class_choice == '2':
@@ -63,7 +70,7 @@ class Combat:
         round_number = 1
 
         while self._char_list[0].is_alive() and self._char_list[1].is_alive():
-            console.print(Panel(f"[bold purple]Round {round_number}[/bold purple]", width=11, border_style="blue"))
+            console.print(Align.center(Panel(f"[bold purple]Round {round_number}[/bold purple]", width=11, border_style="blue")))
             self._char_list[0].attack(self._char_list[1])
             self._char_list[1].attack(self._char_list[0])
 
@@ -71,16 +78,16 @@ class Combat:
 
             round_number += 1
         
-        console.print("[bold]Combat Finished![/bold]")
+        console.print(Align.center("[bold]Combat Finished![/bold]"))
         if self._char_list[0].is_alive():
-            console.print(f"[green]{self._char_list[0].get_name()} Wins![/green]")
+            console.print(Align.center(f"[green]{self._char_list[0].get_name()} Wins![/green]"))
         else:
-            console.print(f"[green]{self._char_list[1].get_name()} Wins![/green]")
+            console.print(Align.center(f"[green]{self._char_list[1].get_name()} Wins![/green]"))
 
 
     def display_character_info(self):
         for character in self._char_list:
-            console.print(Panel(f"{character}", title=f"{character.get_name()}", width=60, border_style="red"))
+            console.print(Align.center(Panel(f"{character}", title=f"{character.get_name()}", width=60, border_style="red")))
 
 if __name__ == "__main__":
     combat = Combat()
