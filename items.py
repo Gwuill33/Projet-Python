@@ -71,6 +71,4 @@ class Bouclier(Items):
 class Potion(Items):
     def __init__(self):
         super().__init__("Potion", 0, 0, 5, 2)
-
-
         
