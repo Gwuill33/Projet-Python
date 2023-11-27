@@ -1,6 +1,8 @@
 import random
 from dice import Dice
 from character import Warrior, Mage, Thief, Character
+from items import Items
+
 
 from rich import print
 from rich.console import Console
@@ -68,12 +70,13 @@ class Combat:
             self.display_character_info()
 
             round_number += 1
-
+        
         console.print("[bold]Combat Finished![/bold]")
         if self._char_list[0].is_alive():
             console.print(f"[green]{self._char_list[0].get_name()} Wins![/green]")
         else:
             console.print(f"[green]{self._char_list[1].get_name()} Wins![/green]")
+
 
     def display_character_info(self):
         for character in self._char_list:
