@@ -59,16 +59,17 @@ class Combat:
 
         actions = input(f"""Choisi ton action entre :
 1 - Attack
-2 - Defense
-3 - Potion (Nombre de potions : {self._char_list[0]._items.get_number_potion()})
+2 - Potion ({'Nombre de potions : ' + str(self._char_list[0]._items.get_number_potion()) if self._char_list[0]._items.get_number_potion() > 0 else 'Pas de potion'})
+3 - Afficher la barre de vie
 """,)
         if actions == '1' :
             return self._char_list[0].attack(self._char_list[1])
-        elif actions == '2':
-            return self._char_list[0].defense(self._char_list[1])
-        elif actions == '3' and self._char_list[0]._items.get_number_potion() > 0:
+        elif actions == '2' and self._char_list[0]._items.get_number_potion() > 0 and self._char_list[0]._items.get_name_items() == "Potion":
             self._char_list[0]._items.set_number_potion(self._char_list[0]._items.get_number_potion() - 1)
             return self._char_list[0].increase_health()
+        elif actions == '3':
+            print(self._char_list[0].show_healthbar())
+            return self.choose_actions()
         else:
             print("Choisi une action valide")
             return self.choose_actions()
