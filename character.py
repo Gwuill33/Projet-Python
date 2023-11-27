@@ -83,8 +83,7 @@ class Character:
         self.decrease_health(wounds)
 
 class Warrior(Character):
-    def __init__(self, name):
-        super().__init__(name)
+    def __init__(self):
         self.skills = {"critical attack": "critical attack"}
 
     def compute_damages(self, roll, target: Character):
@@ -107,8 +106,7 @@ class Warrior(Character):
         target.defense(damages, self)
 
 class Mage(Character):
-    def __init__(self, name):
-        super().__init__(name)
+    def __init__(self):
         self.skills = {"heal": "heal", "fireball": "fireball"}
 
     def compute_defense(self, damages, roll, attacker: Character):
@@ -139,8 +137,7 @@ class Mage(Character):
         target.defense(damages, self)
 
 class Thief(Character):
-    def __init__(self, name):
-        super().__init__(name)
+    def __init__(self):
         self.skills = {"Sneacky attack": "Sneacky attack", "critical attack": "critica attack"}
 
     def Sneacky_attack(self, roll, target: Character):
