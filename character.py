@@ -1,28 +1,28 @@
 from __future__ import annotations
 print("\n")
-
 from dice import Dice
-
-from rich import print
-
-class MessageManager():
-    pass
+from items import Items
 
 class Character:
     
-    def __init__(self, name: str, max_hp: int, attack: int, defense: int, dice: Dice):
+    def __init__(self, name: str, max_hp: int, attack: int, defense: int, dice: Dice, initiative: int, items : Items):
         self._name = name
         self._max_hp = max_hp
         self._current_hp = max_hp
         self._attack_value = attack
         self._defense_value = defense
         self._dice = dice
+        self._initiative = initiative
+        self._items = items
 
     def __str__(self):
         return f"""{self._name} the Character enter the arena with :
     ■ attack: {self._attack_value} 
     ■ defense: {self._defense_value}"""
         
+    def get_initiative(self):
+        return self._initiative
+
     def get_defense_value(self):
         return self._defense_value
         
@@ -40,6 +40,15 @@ class Character:
     def regenerate(self):
         self._current_hp = self._max_hp
 
+
+    def increase_health(self):
+        if self._items.get_name_items() == "Potion":
+            print("🧪 Bonus: Potion in your face (+3 health)")
+            self._current_hp += self._items.get_health_items()
+        if self._current_hp > self._max_hp:
+            self._current_hp = self._max_hp
+        self.show_healthbar()
+
     def decrease_health(self, amount):
         self._current_hp -= amount
         if self._current_hp < 0:
@@ -47,6 +56,9 @@ class Character:
         self.show_healthbar()
         
     def compute_damages(self, roll, target):
+        if self._items.get_name_items() == "Epée":
+            print("🗡️ Bonus: Sword in your face (+3 attack)")
+            return self._attack_value + roll + self._items.get_attack_items() + 3
         return self._attack_value + roll
         
     def attack(self, target: Character):
@@ -54,10 +66,13 @@ class Character:
             return
         roll = self._dice.roll()
         damages = self.compute_damages(roll, target)
-        print(f"⚔️ {self._name} attack {target.get_name()} with {damages} damages (attack: {self._attack_value} + roll: {roll})")
+        print(f"⚔️ {self._name} attack {target.get_name()} with {damages} damages (attack: {self._attack_value} + roll: {roll} + item: {self._items.get_name_items()})")
         target.defense(damages, self)
     
     def compute_defense(self, damages, roll, attacker):
+        if self._items.get_name_items() == "Bouclier":
+            print("🛡️ Bonus: Shield in your face (+3 defense)")
+            return damages - self._defense_value - roll - self._items.get_defense_items()
         return damages - self._defense_value - roll
     
     def defense(self, damages, attacker: Character):
@@ -69,12 +84,12 @@ class Character:
 class Warrior(Character):
     def compute_damages(self, roll, target: Character):
         print("🪓 Bonus: Axe in your face (+3 attack)")
-        return super().compute_damages(roll, target) + 3 
+        return super().compute_damages(roll, target) + 3
 
 class Mage(Character):
     def compute_defense(self, damages, roll, attacker: Character):
         print("🧙 Bonus: Magic armor (-3 damages)")
-        return super().compute_defense(damages, roll, attacker) - 3
+        return super().compute_defense(damages, roll, attacker) + 3
 
 class Thief(Character):
     def compute_damages(self, roll, target: Character):
