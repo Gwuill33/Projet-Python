@@ -1,8 +1,8 @@
+from __future__ import annotations
 import random
 from dice import Dice
 from character import Warrior, Mage, Thief, Character
 from items import Items
-
 
 from rich import print
 from rich.console import Console
@@ -11,11 +11,27 @@ from rich.align import Align
 from rich.progress import track
 import time
 
-
 console = Console()
 
 for i in track(range(8), description="Loading ..."):
     time.sleep(0.3)
+
+
+class Items:
+    def __init__(self, name_items, attack_items, defense_items, health_items):
+        self._name_items = name_items
+        self._attack_items = attack_items
+        self._defense_items = defense_items
+        self._health_items = health_items
+
+    def __str__(self):
+        return f"{self._name_items} (Attack: {self._attack_items}, Defense: {self._defense_items}, Health: {self._health_items})"
+
+    def apply_items(self, character: Character):
+        character.modify_attack(self._attack_items)
+        character.modify_defense(self._defense_items)
+        character.modify_health(self._health_items)
+
 
 class Combat:
     def __init__(self) -> None:
@@ -36,7 +52,7 @@ class Combat:
 
     def choose_character(self):
 
-        console.print("\n[bold]Bienvenue dans le combat des héros ![/bold]\n", justify="center" )
+        console.print("\n[bold]Bienvenue dans le combat des héros ![/bold]\n", justify="center")
 
         class_options = [
             "1. Warrior: Big guy with big weapon.",
@@ -44,17 +60,26 @@ class Combat:
             "3. Thief: Sneaky bastard."
         ]
 
-        console.print(Align.center(Panel("\n".join(class_options), title="Character Classes", border_style="cyan", width=60 )))
+        console.print(Align.center(Panel("\n".join(class_options), title="Character Classes", border_style="cyan", width=60)))
 
-        class_choice = console.input (Align.center("Entrez la classe de votre choix (1, 2, ou 3): "))
+        class_choice = console.input(Align.center("Entrez la classe de votre choix (1, 2, ou 3): "))
 
         name = console.input(Align.center("Quel est ton nom : "))
+        item_choice = console.input(Align.center("Choisi ton item entre :\n1 - Epée\n2 - Bouclier\n3 - Potion(x2)\n"))
+
+        char = None
         if class_choice == '1':
-            return Warrior(name, 20, 8, 3, Dice(6), 1)
+            char = Warrior(name, 20, 8, 3, Dice(6), 1)
         elif class_choice == '2':
-            return Mage(name, 20, 8, 3, Dice(6), 0)
+            char = Mage(name, 20, 8, 3, Dice(6), 0)
         elif class_choice == '3':
-            return Thief(name, 20, 8, 3, Dice(6), 2)
+            char = Thief(name, 20, 8, 3, Dice(6), 2)
+
+        if item_choice in ['1', '2', '3']:
+            item = Items.choose_items(item_choice)
+            item.apply_items(char)
+
+        return char
 
     def combat_order(self):
         if self._char_list[1].get_initiative() > self._char_list[0].get_initiative():
@@ -77,17 +102,17 @@ class Combat:
             self.display_character_info()
 
             round_number += 1
-        
+
         console.print(Align.center("[bold]Combat Finished![/bold]"))
         if self._char_list[0].is_alive():
             console.print(Align.center(f"[green]{self._char_list[0].get_name()} Wins![/green]"))
         else:
             console.print(Align.center(f"[green]{self._char_list[1].get_name()} Wins![/green]"))
 
-
     def display_character_info(self):
         for character in self._char_list:
             console.print(Align.center(Panel(f"{character}", title=f"{character.get_name()}", width=60, border_style="red")))
+
 
 if __name__ == "__main__":
     combat = Combat()
