@@ -18,6 +18,77 @@ console = Console()
 for i in track(range(8), description="Processing..."):
     time.sleep(0.3)
 
+
+class Items:
+    
+     def __init__(self, name_items, attack_items, defense_items, health_items, number_potion=0):
+        self._name_items = name_items
+        self._attack_items = attack_items
+        self._defense_items = defense_items
+        self._health_items = health_items
+        self._number_potion = number_potion
+
+     def __str__(self):
+       pass
+       
+     def get_attack_items(self):
+        return self._attack_items
+    
+     def get_defense_items(self):
+        return self._defense_items
+    
+     def get_health_items(self):
+        return self._health_items
+    
+     def get_name_items(self):
+        return self._name_items
+    
+     def get_number_potion(self):
+        return self._number_potion
+    
+     def set_number_potion(self, number_potion):
+        self._number_potion = number_potion
+
+     def random_items() -> Items:
+
+        épée = Epée()
+        bouclier = Bouclier()
+        potion = Potion()
+        items: list[Items] = [épée, bouclier, potion]
+        item = random.choice(items)
+
+        return item
+
+class Epée(Items):
+    def __init__(self):
+        super().__init__("Epée", 3, 0, 0)
+
+class Bouclier(Items):
+    def __init__(self):
+        super().__init__("Bouclier", 0, 4, 0)
+
+class Potion(Items):
+    def __init__(self):
+        super().__init__("Potion", 0, 0, 5, 2)
+        
+
+    def choose_items(self) -> Items:
+        item = input("""Choisi ton item entre :
+1 - Epée
+2 - Bouclier
+3 - Potion (x2)
+""",)
+        if item == '1':
+            return Epée()
+        elif item == '2':
+            return Bouclier()
+        elif item == '3':
+            return Potion()
+        else:
+            print("Choisi un item valide")
+            return self.choose_items()
+
+
 class Combat:
     def __init__(self) -> None:
         self._char_list: list[Character] = []
@@ -36,26 +107,32 @@ class Combat:
         return char1
 
     def choose_character(self):
-
-        console.print("\n[bold]Bienvenue dans le combat des héros ![/bold]\n", justify="center" )
+        console.print("\n[bold]Bienvenue dans le combat des héros ![/bold]\n", justify="center")
 
         class_options = [
-            "1. Warrior: Big guy with big weapon.",
-            "2. Mage: Spell caster.",
+            "1. Warrior: Big guy with a big weapon.",
+            "2. Mage: Spellcaster.",
             "3. Thief: Sneaky bastard."
         ]
 
-        console.print(Align.center(Panel("\n".join(class_options), title="Character Classes", border_style="cyan", width=60 )))
+        console.print(Align.center(Panel("\n".join(class_options), title="Character Classes", border_style="cyan", width=60)))
 
-        class_choice = console.input (Align.center("Entrez la classe de votre choix (1, 2, ou 3): "))
+        class_choice = console.input(Align.center("Entrez la classe de votre choix (1, 2, ou 3): "))
 
         name = console.input(Align.center("Quel est ton nom : "))
+
+        char = None
         if class_choice == '1':
-            return Warrior(name, 20, 8, 3, Dice(6), 1)
+            char = Warrior(name, 20, 8, 3, Dice(6), 1)
         elif class_choice == '2':
-            return Mage(name, 20, 8, 3, Dice(6), 0)
+            char = Mage(name, 20, 8, 3, Dice(6), 0)
         elif class_choice == '3':
-            return Thief(name, 20, 8, 3, Dice(6), 2)
+            char = Thief(name, 20, 8, 3, Dice(6), 2)
+        else:
+            console.print("Choix de classe invalide.")
+            return self.choose_character()
+
+        return char
 
     def combat_order(self):
         if self._char_list[1].get_initiative() > self._char_list[0].get_initiative():
