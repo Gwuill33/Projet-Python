@@ -43,15 +43,15 @@ class Items():
 [red]1 - Epée[/red]
 [blue]2 - Bouclier[/blue]
 [green]3 - Potion (x2)[/green]
-""", border_style="Purple", title="choisis ton item")))
+""", border_style="Purple", title="Quel est ton item")))
         if item == '1':
-            console.print(Align.center("[bold]tu as choisi l'option 1 ![/bold]"))
+            console.print(Align.center("[bold]Tu as choisi l'option 1 ![/bold]"))
             return Epée()
         elif item == '2':
-            console.print(Align.center("[bold]tu as choisi l'option 2 ![/bold]"))
+            console.print(Align.center("[bold]Tu as choisi l'option 2 ![/bold]"))
             return Bouclier()
         elif item == '3':
-            console.print(Align.center("[bold]tu as choisi l'option 3 ![/bold]"))
+            console.print(Align.center("[bold]Tu as choisi l'option 3 ![/bold]"))
             return Potion()
         else:
             print("Choisi un item valide")
