@@ -65,7 +65,7 @@ class Combat:
             return char
         # Si le choix n'est pas valide
         else:
-            print("[red]Choisissez un personnage valide[/red]")
+            console.print("[red]Choisissez un personnage valide[/red]")
             return self.choose_character()
         
 
@@ -74,7 +74,7 @@ class Combat:
 
         actions = console.input(Align.center(Panel(f"""
 [red]1 - Attack[/red]
-[blue]2 - Defense[/blue]
+[blue]2 - Afficher barre de vie[/blue]
 [green]3 - Potion (Nombre de potions : {self._char_list[0]._items.get_number_potion()})[/green]
 """,border_style="red", title="choisis ton action")))
         if actions == '1' :
@@ -84,7 +84,8 @@ class Combat:
         elif actions == '2':
             console.print(Align.center("[bold]tu as choisi l'option 2 ![/bold]"))
             time.sleep(0.2)
-            return self._char_list[0].defense(self._char_list[1])
+            print(self._char_list[0].show_healthbar())
+            return self.choose_actions()
         elif actions == '3' and self._char_list[0]._items.get_number_potion() > 0:
             console.print(Align.center("[bold]tu as choisi l'option 3 ![/bold]"))
             time.sleep(0.2)
