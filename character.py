@@ -39,7 +39,7 @@ class Character:
 
     def show_healthbar(self):
         missing_hp = self._max_hp - self._current_hp
-        healthbar = f"[red][{"♥" * self._current_hp}{"♡" * missing_hp}] {self._current_hp}/{self._max_hp}hp[/red]"
+        healthbar = f"[red][{'♥' * self._current_hp}{'♡' * missing_hp}] {self._current_hp}/{self._max_hp}hp[/red]"
         console.print(Align.center(Panel((healthbar), border_style="red",width=50)))
 
     def regenerate(self):
