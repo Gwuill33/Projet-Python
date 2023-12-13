@@ -1,5 +1,10 @@
 from __future__ import annotations
 import random
+from rich.console import Console
+from rich.panel import Panel
+from rich.align import Align
+
+console = Console()
 
 class Items():
     
@@ -34,16 +39,19 @@ class Items():
     
     @staticmethod
     def choose_items() -> Items:
-        item = input("""Choisi ton item entre :
-1 - Epée
-2 - Bouclier
-3 - Potion (x2)
-""",)
+        item = console.input(Align.center(Panel("""
+[red]1 - Epée[/red]
+[blue]2 - Bouclier[/blue]
+[green]3 - Potion (x2)[/green]
+""", border_style="Purple", title="Quel est ton item")))
         if item == '1':
+            console.print(Align.center("[bold]Tu as choisi l'option 1 ![/bold]"))
             return Epée()
         elif item == '2':
+            console.print(Align.center("[bold]Tu as choisi l'option 2 ![/bold]"))
             return Bouclier()
         elif item == '3':
+            console.print(Align.center("[bold]Tu as choisi l'option 3 ![/bold]"))
             return Potion()
         else:
             print("Choisi un item valide")
@@ -71,6 +79,4 @@ class Bouclier(Items):
 class Potion(Items):
     def __init__(self):
         super().__init__("Potion", 0, 0, 5, 2)
-
-
         

@@ -3,8 +3,19 @@ import random
 from dice import Dice
 from character import Warrior, Mage, Thief, Character
 from items import Items
+from rich.console import Console
+from rich.panel import Panel
+from rich.align import Align
+from rich.progress import track
+import time
+
 
 print("\n")
+
+console = Console()
+
+for i in track(range(8), description="Processing..."):
+    time.sleep(0.3)
 
 class Combat:
 
@@ -28,49 +39,60 @@ class Combat:
         return char1
     
     def choose_character(self):
-        char = input("""Choisi ton type de personnage entre :
-1 - Warrior
-2 - Mage 
-3 - Thief 
-""",)
+        char = console.input(Align.center(Panel("""
+[red]1 - Warrior : Fort mais stupide[/red]
+[blue]2 - Mage : Intelligent mais faible[/blue]
+[yellow]3 - Thief : Discret comme un rat[/yellow]
+""",border_style="cyan", title="Choisis ta classe")))
         # Le choix du personnage est le Warrior
         if char == '1' :
-            name = input ("Quel est ton nom : ")
+            console.print(Align.center("[bold]Tu as choisi l'option 1 ![/bold]"))
+            name = console.input (Align.center("[green bold]Quel est ton nom : [/green bold]"))
+            console.print(Align.center(f"[blue bold]Tu as choisis ton nom ! Ça sera {name}[/blue bold]"))
             char = Warrior(name, 20, 8, 3, Dice(6), 1, Items.choose_items())
             return char
         # Le choix du personnage est le Mage
         elif char == '2':
-            name = input ("Quel est ton nom : ")
+            console.print(Align.center("[bold]Tu as chosi l'option 2 ![/bold]"))
+            name = console.input (Align.center("[green bold]Quel est ton nom : [/green bold]"))
             char = Mage(name, 20, 8, 3, Dice(6), 0, Items.choose_items())
             return char
         # Le choix du personnage est le Thief
         elif char == '3':
-            name = input ("Quel est ton nom : ")
+            console.print(Align.center("[bold]Tu as choisis l'option 3 ![/bold]"))
+            name = console.input (Align.center("[green bold]Quel est ton nom : [/green bold]"))
             char = Thief(name, 20, 8, 3, Dice(6), 2, Items.choose_items())
             return char
         # Si le choix n'est pas valide
         else:
-            print("Choisissez un personnage valide")
+            console.print("[red]Choisis un personnage valide[/red]")
             return self.choose_character()
         
 
 
     def choose_actions(self):
 
-        actions = input(f"""Choisi ton action entre :
-1 - Attack
-2 - Defense
-3 - Potion (Nombre de potions : {self._char_list[0]._items.get_number_potion()})
-""",)
+        actions = console.input(Align.center(Panel(f"""
+[red]1 - Attack[/red]
+[blue]2 - Afficher barre de vie[/blue]
+[green]3 - Potion (Nombre de potions : {self._char_list[0]._items.get_number_potion()})[/green]
+""",border_style="red", title="Quelle est ton action")))
         if actions == '1' :
+            console.print(Align.center("[bold]Tu as choisi l'option 1 ![/bold]"))
+            time.sleep(0.2)
             return self._char_list[0].attack(self._char_list[1])
         elif actions == '2':
-            return self._char_list[0].defense(self._char_list[1])
+            console.print(Align.center("[bold]Tu as choisi l'option 2 ![/bold]"))
+            time.sleep(0.2)
+            print(self._char_list[0].show_healthbar())
+            return self.choose_actions()
         elif actions == '3' and self._char_list[0]._items.get_number_potion() > 0:
+            console.print(Align.center("[bold]Tu as choisi l'option 3 ![/bold]"))
+            time.sleep(0.2)
             self._char_list[0]._items.set_number_potion(self._char_list[0]._items.get_number_potion() - 1)
             return self._char_list[0].increase_health()
         else:
-            print("Choisi une action valide")
+            print("[red]Choisis une action valide[/red]")
             return self.choose_actions()
 
 
